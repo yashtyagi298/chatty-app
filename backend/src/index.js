@@ -27,9 +27,10 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.resolve(__dirname, "../../frontend/dist"))); // Adjust this path
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../../frontend/dist", "index.html")); // Adjust this path as well
+    res.sendFile(path.resolve(__dirname, "../../frontend/","dist", "index.html")); // Adjust this path as well
   });
 }
+console.log(path.resolve(__dirname, "../../frontend/dist"));
 
 
 
