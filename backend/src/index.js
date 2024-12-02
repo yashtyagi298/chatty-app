@@ -18,18 +18,19 @@ app.use(cors({
     credentials:true,
 }));
 const PORT = process.env.PORT;
-const _dirname=path.resolve();
+// const _dirname=path.resolve();
 
 app.use("/api/auth",authRoutes);
 app.use("/api/message",messageRoute);
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(_dirname, "../../frontend/dist")));
+  app.use(express.static(path.resolve("frontend", "dist")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(_dirname, "../../frontend", "dist", "index.html"));
+    res.sendFile(path.resolve("frontend", "dist", "index.html"));
   });
 }
+
 
 server.listen(PORT, () => {
     console.log(` http://localhost:${PORT}`);
