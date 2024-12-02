@@ -8,6 +8,7 @@ import messageRoute from "./routers/message.route.js";
 import cors from "cors";
 import { app,server } from "./lib/socket.js";
 import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config()
 
@@ -17,14 +18,16 @@ app.use(cors({
     origin:'http://localhost:5173',
     credentials:true,
 }));
-const PORT = process.env.PORT;
-const __dirname=path.resolve();
+const PORT = process.env.PORT || 5001;
 
+const __filename =  fileURLToPath(import.meta.url);
+const __dirname=path.dirname(__filename);
+console.log("Backend directory:", __dirname);
 app.use("/api/auth",authRoutes);
 app.use("/api/message",messageRoute);
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.resolve(__dirname, "../../frontend/dist"))); // Adjust this path
+  app.use(express.static(path.join(__dirname, "../../frontend/dist"))); // Adjust this path
 
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../../frontend/","dist", "index.html")); // Adjust this path as well
